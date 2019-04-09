@@ -1,0 +1,11 @@
+commit 3a58b8d1ba3d488af0fa44693ac827cf70c0f99b
+tree afb772be49789e2f8a61c441cd4fb462f07ac2c3
+parent 87e4f5b86feafb6a711814b737cefe181672d484
+author amar <al@amarlanda.com> 2019-04-09 13:30:09 +0100
+committer amar <al@amarlanda.com> 2019-04-09 13:30:09 +0100
+
+    added try catch block
+
+    .
+
+:100644 100644 e22e7cd1bdad0adc63c33ed5d3e7af3b6cd3487d 97ee38822ae9fdde4b7fee8cf0fb4d2ba0842426 M	Jenkinsfile

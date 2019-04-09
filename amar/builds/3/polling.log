@@ -1,0 +1,10 @@
+Started on Apr 9, 2019 12:31:00 PM
+Using strategy: Default
+[poll] Last Built Revision: Revision 87e4f5b86feafb6a711814b737cefe181672d484 (refs/remotes/origin/master)
+No credentials specified
+ > git --version # timeout=10
+ > git ls-remote -h https://github.com/Amarlanda/jenkins.git # timeout=10
+Found 1 remote heads on https://github.com/Amarlanda/jenkins.git
+[poll] Latest remote head revision on refs/heads/master is: 3a58b8d1ba3d488af0fa44693ac827cf70c0f99b
+Done. Took 0.58 sec
+Changes found

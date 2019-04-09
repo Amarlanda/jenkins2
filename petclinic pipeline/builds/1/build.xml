@@ -1,0 +1,109 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.32">
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.triggers.SCMTrigger_-SCMTriggerCause/>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+    <hudson.triggers.SCMTrigger_-BuildAction/>
+    <org.jenkinsci.plugins.workflow.libs.LibrariesAction plugin="workflow-cps-global-lib@2.13">
+      <libraries/>
+    </org.jenkinsci.plugins.workflow.libs.LibrariesAction>
+    <org.jenkinsci.plugins.workflow.cps.EnvActionImpl plugin="workflow-cps@2.65">
+      <env class="tree-map"/>
+    </org.jenkinsci.plugins.workflow.cps.EnvActionImpl>
+  </actions>
+  <queueId>2</queueId>
+  <timestamp>1554811509884</timestamp>
+  <startTime>1554811509892</startTime>
+  <result>FAILURE</result>
+  <duration>3918</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>FAILURE</result>
+    <script>node {
+    
+    notify(&apos;Started&apos;)
+    
+    try {
+        stage &apos;checkout&apos;
+        git &apos;https://github.com/g0t4/jenkins2-course-spring-petclinic.git&apos;
+
+        stage &apos;compiling, test, packaging&apos;
+        // on windows use: bat &apos;mvn clean verify&apos;
+        sh &apos;mvn clean verify&apos;
+    
+        
+    } catch (err) {
+        notify(&quot;Error ${err}&quot;)
+        currentBuild.result = &apos;FAILURE&apos;
+    }
+    
+    stage &apos;archival&apos;
+    publishHTML(target: [allowMissing: true, 
+                    alwaysLinkToLastBuild: false, 
+                    keepAll: true, 
+                    reportDir: &apos;target/site/jacoco/&apos;, 
+                    reportFiles: &apos;index.html&apos;, 
+                    reportName: &apos;Code Coverage&apos;])
+    
+    step([$class: &apos;JUnitResultArchiver&apos;, 
+          testResults: &apos;target/surefire-reports/TEST-*.xml&apos;])
+
+    step([$class: &apos;ArtifactArchiver&apos;, 
+           artifacts: &quot;target/*.?ar&quot;, 
+           excludes: null])
+    
+}
+
+def notify(status){
+    emailext (
+      to: &quot;wesmdemos@gmail.com&quot;,
+      subject: &quot;${status}: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos;&quot;,
+      body: &quot;&quot;&quot;&lt;p&gt;${status}: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos;:&lt;/p&gt;
+        &lt;p&gt;Check console output at &lt;a href=&apos;${env.BUILD_URL}&apos;&gt;${env.JOB_NAME} [${env.BUILD_NUMBER}]&lt;/a&gt;&lt;/p&gt;&quot;&quot;&quot;,
+    )
+}
+
+
+       
+
+</script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>164232114</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>2767642822</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>1375526335</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>2080188267</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>346456645</long>
+      </entry>
+    </timings>
+    <sandbox>true</sandbox>
+    <iota>7</iota>
+    <head>1:7</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>
